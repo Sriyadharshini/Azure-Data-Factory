@@ -33,7 +33,7 @@
 				}
 			},
 			{
-				"name": "ForEach iteration",
+				"name": "ForEach_iteration",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -52,7 +52,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "checking files",
+							"name": "checking condition",
 							"type": "IfCondition",
 							"dependsOn": [],
 							"userProperties": [],
@@ -63,7 +63,7 @@
 								},
 								"ifTrueActivities": [
 									{
-										"name": "Copy data to reports",
+										"name": "Copy daata",
 										"type": "Copy",
 										"dependsOn": [],
 										"policy": {
@@ -73,6 +73,7 @@
 											"secureOutput": false,
 											"secureInput": false
 										},
+										"userProperties": [],
 										"typeProperties": {
 											"source": {
 												"type": "DelimitedTextSource",
@@ -123,7 +124,10 @@
 												"referenceName": "dataforreportssink",
 												"type": "DatasetReference",
 												"parameters": {
-													"p_filename": "@item().name"
+													"p_filename": {
+														"value": "@item().name\n",
+														"type": "Expression"
+													}
 												}
 											}
 										]
