@@ -7,7 +7,7 @@
 		},
 		"parameters": {
 			"p_filename": {
-				"type": "String"
+				"type": "string"
 			}
 		},
 		"annotations": [],
