@@ -24,6 +24,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -32,7 +33,7 @@
 				}
 			},
 			{
-				"name": "ForEach iteration",
+				"name": "ForEach_iteration",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -51,18 +52,18 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "checking files",
+							"name": "checking condition",
 							"type": "IfCondition",
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@startswith(item(), 'fact')",
+									"value": "@startswith(item().name,'fact')",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
 									{
-										"name": "Copy data to reports",
+										"name": "Copy daata",
 										"type": "Copy",
 										"dependsOn": [],
 										"policy": {
@@ -85,12 +86,49 @@
 													"type": "DelimitedTextReadSettings"
 												}
 											},
-											"enableStaging": false
+											"sink": {
+												"type": "DelimitedTextSink",
+												"storeSettings": {
+													"type": "AzureBlobFSWriteSettings"
+												},
+												"formatSettings": {
+													"type": "DelimitedTextWriteSettings",
+													"quoteAllText": true,
+													"fileExtension": ".txt"
+												}
+											},
+											"enableStaging": false,
+											"translator": {
+												"type": "TabularTranslator",
+												"typeConversion": true,
+												"typeConversionSettings": {
+													"allowDataTruncation": true,
+													"treatBooleanAsNumber": false
+												}
+											}
 										},
 										"inputs": [
 											{
 												"referenceName": "datafilesreport",
-												"type": "DatasetReference"
+												"type": "DatasetReference",
+												"parameters": {
+													"p_filename": {
+														"value": "@item().name",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "dataforreportssink",
+												"type": "DatasetReference",
+												"parameters": {
+													"p_filename": {
+														"value": "@item().name\n",
+														"type": "Expression"
+													}
+												}
 											}
 										]
 									}
