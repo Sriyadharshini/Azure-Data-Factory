@@ -1,0 +1,9 @@
+{
+	"name": "handsonadftest",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d0325610-dc0a-47c6-9519-a9227dd1529c",
+		"tenantId": "337d68f1-c8b3-4093-b7ad-50d29cf2e015"
+	}
+}
