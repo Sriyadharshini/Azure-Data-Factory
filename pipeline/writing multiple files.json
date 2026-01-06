@@ -58,7 +58,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@startswith(item(), 'fact')",
+									"value": "@startswith(item().name,'fact')",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
@@ -111,7 +111,10 @@
 												"referenceName": "datafilesreport",
 												"type": "DatasetReference",
 												"parameters": {
-													"p_filename": "item().name"
+													"p_filename": {
+														"value": "@item().name",
+														"type": "Expression"
+													}
 												}
 											}
 										],
@@ -120,7 +123,7 @@
 												"referenceName": "dataforreportssink",
 												"type": "DatasetReference",
 												"parameters": {
-													"p_filename": "item().name"
+													"p_filename": "@item().name"
 												}
 											}
 										]
