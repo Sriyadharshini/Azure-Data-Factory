@@ -1,0 +1,22 @@
+{
+	"name": "csvfromgit",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "HttpServerforgit",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "/Sriyadharshini/Azure-Data-Factory/main/Sales.csv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
