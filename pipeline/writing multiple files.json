@@ -109,7 +109,7 @@
 										},
 										"inputs": [
 											{
-												"referenceName": "datafilesreport",
+												"referenceName": "dataforreports",
 												"type": "DatasetReference"
 											}
 										],
