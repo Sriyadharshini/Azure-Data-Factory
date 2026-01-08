@@ -170,8 +170,8 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"fileName": "Sales.csv",
-						"folderPath": "csvfiles",
-						"fileSystem": "destination"
+						"folderPath": "csvfile",
+						"fileSystem": "managerinput"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -289,6 +289,33 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/dashboarddatasink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "dashboard"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/datafilesreport')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -313,6 +340,34 @@
 						},
 						"folderPath": "csvfiles",
 						"fileSystem": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflowsinkdata')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "csvfiles/dataflow",
+						"fileSystem": "reports"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -480,7 +535,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflowsinkdata')]",
+			"name": "[concat(parameters('factoryName'), '/managerinputfiles')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -493,8 +548,9 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "csvfiles/dataflow",
-						"fileSystem": "reports"
+						"fileName": "Sales.csv",
+						"folderPath": "csvfile",
+						"fileSystem": "managerinput"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -508,13 +564,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/reading_data_from_http_git')]",
+			"name": "[concat(parameters('factoryName'), '/reading data from git')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data from http",
+						"name": "Copy data from git",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -566,7 +622,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "csvdatatolake",
+								"referenceName": "managerinputfiles",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -580,7 +636,117 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/csvfromgit')]",
-				"[concat(variables('factoryId'), '/datasets/csvdatatolake')]"
+				"[concat(variables('factoryId'), '/datasets/managerinputfiles')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/reading_data_from_manager_folder')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy to dashboard",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "managerinputfiles",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "dashboarddatasink",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Delete manager file",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "Copy to dashboard",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "managerinputfiles",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"enableLogging": false,
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/managerinputfiles')]",
+				"[concat(variables('factoryId'), '/datasets/dashboarddatasink')]"
 			]
 		},
 		{
@@ -719,6 +885,30 @@
 														}
 													}
 												]
+											},
+											{
+												"name": "data read var",
+												"type": "SetVariable",
+												"dependsOn": [
+													{
+														"activity": "Copy daata",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "datareadcount",
+													"value": {
+														"value": "@activity('Copy daata').output.dataRead",
+														"type": "Expression"
+													}
+												}
 											}
 										]
 									}
@@ -729,6 +919,17 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"data read": {
+						"type": "String"
+					},
+					"data_read": {
+						"type": "String"
+					},
+					"datareadcount": {
+						"type": "Integer"
+					}
 				},
 				"annotations": []
 			},
@@ -872,8 +1073,7 @@
 								"datasetParameters": {
 									"sourcefordataflow": {},
 									"dataflowsink": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -892,36 +1092,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/getting_metadata_dataflow')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger data flow')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "dataflow test",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Minute",
-						"interval": 15,
-						"startTime": "2026-01-08T20:50:00",
-						"timeZone": "India Standard Time"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/dataflow test')]"
 			]
 		}
 	]
