@@ -25,6 +25,9 @@
 		},
 		"HttpServerforgit_properties_typeProperties_url": {
 			"value": "https://raw.githubusercontent.com"
+		},
+		"trigger data movement_properties_typeProperties_scope": {
+			"value": "/subscriptions/a803c776-63e6-47d9-889b-21fd0ff6dfed/resourceGroups/rghandsoneastus/providers/Microsoft.Storage/storageAccounts/handsonstorageadf"
 		}
 	}
 }

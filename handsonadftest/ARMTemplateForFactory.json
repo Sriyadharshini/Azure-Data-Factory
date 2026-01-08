@@ -34,6 +34,10 @@
 		"HttpServerforgit_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com"
+		},
+		"trigger data movement_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/a803c776-63e6-47d9-889b-21fd0ff6dfed/resourceGroups/rghandsoneastus/providers/Microsoft.Storage/storageAccounts/handsonstorageadf"
 		}
 	},
 	"variables": {
@@ -1122,6 +1126,36 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/dataflowsourcedataset')]",
 				"[concat(variables('factoryId'), '/datasets/dataflowsinkdata')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger data movement')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "reading_data_from_manager_folder",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/managerinput/blobs/Sales.csv",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('trigger data movement_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/reading_data_from_manager_folder')]"
 			]
 		}
 	]
