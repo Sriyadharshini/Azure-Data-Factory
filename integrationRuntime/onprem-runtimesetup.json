@@ -1,0 +1,6 @@
+{
+	"name": "onprem-runtimesetup",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
