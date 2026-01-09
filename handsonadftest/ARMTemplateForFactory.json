@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabaseconnectivity'"
 		},
+		"Is_onprem_fileservice_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Is_onprem_fileservice'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://handsonstorageadf.dfs.core.windows.net/"
@@ -34,6 +38,14 @@
 		"HttpServerforgit_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com"
+		},
+		"Is_onprem_fileservice_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "\\\\desktop-df8ial0\\onpremdata"
+		},
+		"Is_onprem_fileservice_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "desktop-df8ial0\\admin"
 		},
 		"trigger data movement_properties_typeProperties_scope": {
 			"type": "string",
@@ -1029,6 +1041,30 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Is_onprem_fileservice')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "FileServer",
+				"typeProperties": {
+					"host": "[parameters('Is_onprem_fileservice_properties_typeProperties_host')]",
+					"userId": "[parameters('Is_onprem_fileservice_properties_typeProperties_userId')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Is_onprem_fileservice_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "onprem-runtimesetup",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/onprem-runtimesetup')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/trigger data flow')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -1057,6 +1093,46 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/dataflow test')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger data movement')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "reading_data_from_manager_folder",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/managerinput/blobs/Sales.csv",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('trigger data movement_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/reading_data_from_manager_folder')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/onprem-runtimesetup')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
@@ -1126,36 +1202,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/dataflowsourcedataset')]",
 				"[concat(variables('factoryId'), '/datasets/dataflowsinkdata')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger data movement')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "reading_data_from_manager_folder",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/managerinput/blobs/Sales.csv",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('trigger data movement_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/reading_data_from_manager_folder')]"
 			]
 		}
 	]

@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabaseconnectivity'"
 		},
+		"Is_onprem_fileservice_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Is_onprem_fileservice'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://handsonstorageadf.dfs.core.windows.net/"
@@ -34,6 +38,14 @@
 		"HttpServerforgit_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com"
+		},
+		"Is_onprem_fileservice_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "\\\\desktop-df8ial0\\onpremdata"
+		},
+		"Is_onprem_fileservice_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "desktop-df8ial0\\admin"
 		},
 		"trigger data movement_properties_typeProperties_scope": {
 			"type": "string",
@@ -72,6 +84,9 @@
 					"AzureSqlDatabaseconnectivity_password": {
 						"value": "[parameters('AzureSqlDatabaseconnectivity_password')]"
 					},
+					"Is_onprem_fileservice_password": {
+						"value": "[parameters('Is_onprem_fileservice_password')]"
+					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
@@ -86,6 +101,12 @@
 					},
 					"HttpServerforgit_properties_typeProperties_url": {
 						"value": "[parameters('HttpServerforgit_properties_typeProperties_url')]"
+					},
+					"Is_onprem_fileservice_properties_typeProperties_host": {
+						"value": "[parameters('Is_onprem_fileservice_properties_typeProperties_host')]"
+					},
+					"Is_onprem_fileservice_properties_typeProperties_userId": {
+						"value": "[parameters('Is_onprem_fileservice_properties_typeProperties_userId')]"
 					}
 				}
 			},
