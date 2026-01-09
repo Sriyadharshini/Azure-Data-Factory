@@ -5,9 +5,9 @@
 		"annotations": [],
 		"type": "FileServer",
 		"typeProperties": {
-			"host": "S:\\data engineering\\onprem data",
-			"userId": "sriyadharshinir@outlook.com",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjNmNjYmViOC1hNWYzLTRjMTQtYjk5Yy1kZWVlODFjNjgzNGQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"host": "\\\\desktop-df8ial0\\onprem data",
+			"userId": "admin",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5ZWZjZjAwMi04Y2FiLTQwMTAtYTBlOC05NTE3ZGIwNzY3NjMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "onprem-runtimesetup",
