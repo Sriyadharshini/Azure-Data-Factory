@@ -5,9 +5,9 @@
 		"annotations": [],
 		"type": "FileServer",
 		"typeProperties": {
-			"host": "\\\\desktop-df8ial0\\onpremdata",
+			"host": "S:\\data engineering\\onpremdata",
 			"userId": "desktop-df8ial0\\admin",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI0ODA1NDAxZi00MTBjLTQyMDYtOTE4Yi02NjUzYWRiMjYzMTMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJkNDBmOTQ0MC0wNmFkLTRlYTQtYWUyZC0zY2RmM2ZlMGFhNGIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "onprem-runtimesetup",
