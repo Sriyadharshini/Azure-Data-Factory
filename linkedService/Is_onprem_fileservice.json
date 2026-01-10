@@ -7,7 +7,7 @@
 		"typeProperties": {
 			"host": "S:\\data engineering\\onpremdata",
 			"userId": "desktop-df8ial0\\admin",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJkNDBmOTQ0MC0wNmFkLTRlYTQtYWUyZC0zY2RmM2ZlMGFhNGIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5ZGVmOWEyNi02OWVkLTQ2MmMtYjI3OS0wOWVhZmI4ZmFhNjkiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "onprem-runtimesetup",
