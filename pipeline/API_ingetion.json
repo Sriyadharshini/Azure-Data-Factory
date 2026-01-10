@@ -18,7 +18,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from DimUser\nwhere subscription_type='Premium'",
+							"value": "select * from DimUser\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
