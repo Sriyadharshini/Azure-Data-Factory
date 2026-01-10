@@ -1,0 +1,21 @@
+{
+	"name": "getmetadataonprem",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Is_onprem_fileservice",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

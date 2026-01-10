@@ -103,9 +103,20 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Get datalist",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('Get datalist').output.childItems",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "copy data from onprem multiplefiles",
@@ -155,7 +166,13 @@
 							"inputs": [
 								{
 									"referenceName": "copyonpremdatasource",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"p_filename": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
@@ -181,15 +198,23 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"fieldList": []
+					"dataset": {
+						"referenceName": "getmetadataonprem",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "FileServerReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
 				}
 			}
 		],
-		"parameters": {
-			"listoffiles": {
-				"type": "String"
-			}
-		},
 		"annotations": []
 	}
 }
