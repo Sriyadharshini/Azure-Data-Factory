@@ -41,7 +41,7 @@
 		},
 		"Is_onprem_fileservice_properties_typeProperties_host": {
 			"type": "string",
-			"defaultValue": "\\\\desktop-df8ial0\\onpremdata"
+			"defaultValue": "S:\\data engineering\\onpremdata"
 		},
 		"Is_onprem_fileservice_properties_typeProperties_userId": {
 			"type": "string",

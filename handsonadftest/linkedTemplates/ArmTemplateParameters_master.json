@@ -30,7 +30,7 @@
 			"value": "https://raw.githubusercontent.com"
 		},
 		"Is_onprem_fileservice_properties_typeProperties_host": {
-			"value": "\\\\desktop-df8ial0\\onpremdata"
+			"value": "S:\\data engineering\\onpremdata"
 		},
 		"Is_onprem_fileservice_properties_typeProperties_userId": {
 			"value": "desktop-df8ial0\\admin"
