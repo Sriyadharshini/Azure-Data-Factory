@@ -1,21 +1,27 @@
 {
-	"name": "bronzesqldatasink",
+	"name": "checkinglastloadedfile",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "Parquet",
+		"type": "Json",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "initialloadvalue",
-				"folderPath": "sqldata",
+				"fileName": "last_load",
+				"folderPath": "monitor/last_loaded",
 				"fileSystem": "bronze"
-			},
-			"compressionCodec": "snappy"
+			}
 		},
-		"schema": []
+		"schema": {
+			"type": "object",
+			"properties": {
+				"last_load": {
+					"type": "string"
+				}
+			}
+		}
 	}
 }
