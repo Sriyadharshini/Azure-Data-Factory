@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "empty.json",
-				"folderPath": "monitor/emptyjson",
+				"fileName": "last_load",
+				"folderPath": "monitor/last_loaded",
 				"fileSystem": "bronze"
 			}
 		},
