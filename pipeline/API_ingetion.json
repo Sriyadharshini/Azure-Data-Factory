@@ -25,7 +25,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from DimUser\nwhere  updated_at > '@{activity('Lookup into datalake lastloaded value').output.firstRow.last_load}'",
+							"value": "select * from dbo.DimUser\nwhere  updated_at > '@{activity('Lookup into datalake lastloaded value').output.firstRow.last_load}'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -58,7 +58,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "bronzesqldatasink",
+						"referenceName": "Parquetfilefromsqlsink",
 						"type": "DatasetReference"
 					}
 				]

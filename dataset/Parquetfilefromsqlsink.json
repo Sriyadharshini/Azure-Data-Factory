@@ -1,5 +1,5 @@
 {
-	"name": "bronzesqldatasink",
+	"name": "Parquetfilefromsqlsink",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
