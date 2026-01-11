@@ -1,5 +1,5 @@
 {
-	"name": "csvdatatolake",
+	"name": "getting_metadata_dataflow",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
@@ -10,9 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "Sales.csv",
-				"folderPath": "csvfile",
-				"fileSystem": "managerinput"
+				"folderPath": "csvfiles",
+				"fileSystem": "destination"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

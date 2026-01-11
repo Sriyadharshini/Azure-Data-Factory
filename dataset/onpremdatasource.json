@@ -1,0 +1,35 @@
+{
+	"name": "onpremdatasource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Is_onprem_fileservice",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "DimAirline.csv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "airline_id",
+				"type": "String"
+			},
+			{
+				"name": "airline_name",
+				"type": "String"
+			},
+			{
+				"name": "country",
+				"type": "String"
+			}
+		]
+	}
+}

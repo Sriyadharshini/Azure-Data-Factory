@@ -1,5 +1,5 @@
 {
-	"name": "csvdatatolake",
+	"name": "dashboarddatasink",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
@@ -10,9 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "Sales.csv",
-				"folderPath": "csvfile",
-				"fileSystem": "managerinput"
+				"fileSystem": "dashboard"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

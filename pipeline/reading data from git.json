@@ -1,9 +1,9 @@
 {
-	"name": "reading_data_from_http_git",
+	"name": "reading data from git",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data from http",
+				"name": "Copy data from git",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -54,7 +54,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "csvdatatolake",
+						"referenceName": "managerinputfiles",
 						"type": "DatasetReference"
 					}
 				]

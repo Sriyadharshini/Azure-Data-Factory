@@ -1,5 +1,5 @@
 {
-	"name": "csvdatatolake",
+	"name": "dataflowsinkdata",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
@@ -10,9 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "Sales.csv",
-				"folderPath": "csvfile",
-				"fileSystem": "managerinput"
+				"folderPath": "csvfiles/dataflow",
+				"fileSystem": "reports"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

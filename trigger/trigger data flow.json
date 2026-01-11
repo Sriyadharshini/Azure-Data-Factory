@@ -1,0 +1,24 @@
+{
+	"name": "trigger data flow",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "dataflow test",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2026-01-08T20:50:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

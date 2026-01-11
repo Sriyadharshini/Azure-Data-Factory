@@ -1,5 +1,5 @@
 {
-	"name": "csvdatatolake",
+	"name": "managerinputfiles",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",

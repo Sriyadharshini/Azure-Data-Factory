@@ -131,6 +131,30 @@
 												}
 											}
 										]
+									},
+									{
+										"name": "data read var",
+										"type": "SetVariable",
+										"dependsOn": [
+											{
+												"activity": "Copy daata",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "datareadcount",
+											"value": {
+												"value": "@activity('Copy daata').output.dataRead",
+												"type": "Expression"
+											}
+										}
 									}
 								]
 							}
@@ -139,6 +163,17 @@
 				}
 			}
 		],
+		"variables": {
+			"data read": {
+				"type": "String"
+			},
+			"data_read": {
+				"type": "String"
+			},
+			"datareadcount": {
+				"type": "Integer"
+			}
+		},
 		"annotations": []
 	}
 }
