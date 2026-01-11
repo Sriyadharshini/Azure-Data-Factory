@@ -5,6 +5,8 @@
 			{
 				"name": "onprem ingestion",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureInput": false
@@ -21,6 +23,8 @@
 			{
 				"name": "reading data from git",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "onprem ingestion",
@@ -62,6 +66,34 @@
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Web alert trigger",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "incremental_load",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-21.northcentralus.logic.azure.com:443/workflows/c6d8eaf2d6704b9493a600edcdb88493/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=o9Wacj-HFxHXZJuvH0MnAQVGbAXeHhgSAkEexQKuong",
+					"body": {
+						"value": "{\n    \"pipe_name\":\"@{pipeline().Pipeline}\",\n    \"run_id\":\"@{pipeline().RunId}\",\n    \"success\":\"@{activity('incremental_load').output}\",\n    \"error\":\"@{if(equals(activity('incremental_load').Status,'Failed') , string(activity('incremental_load').error),'NO errror')}\"\n}",
+						"type": "Expression"
+					}
 				}
 			}
 		],
