@@ -11,6 +11,12 @@
 						"dependencyConditions": [
 							"Succeeded"
 						]
+					},
+					{
+						"activity": "Latest loaded data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
 				],
 				"policy": {
@@ -25,7 +31,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from dbo.DimUser\nwhere updated_at > CONVERT(datetime2, '@{replace(activity('Lookup into datalake lastloaded value').output.firstRow.last_load,'\\\"Z\\\"','')}')",
+							"value": "select * from dbo.DimUser\nwhere updated_at > CONVERT(datetime2,'@{replace(activity('Lookup into datalake lastloaded value').output.firstRow.last_load,'\\\"Z\\\"','')}')\nand updated_at < CONVERT(datetime2,'@{replace(activity('Latest loaded data').output.firstRow.latest_value,'\\\"Z\\\"','')}')",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -204,6 +210,65 @@
 						"type": "DatasetReference"
 					}
 				}
+			},
+			{
+				"name": "watermark",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Copy data from sql",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"additionalColumns": {
+							"type": "Expression",
+							"value": "@activity('Latest loaded data').output.firstRow.latest_value"
+						},
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "emptyjsondatasetsource",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "latsetloadsinkdataset",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
