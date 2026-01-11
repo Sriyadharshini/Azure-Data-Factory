@@ -233,10 +233,15 @@
 				"typeProperties": {
 					"source": {
 						"type": "JsonSource",
-						"additionalColumns": {
-							"type": "Expression",
-							"value": "@activity('Latest loaded data').output.firstRow.latest_value"
-						},
+						"additionalColumns": [
+							{
+								"name": "last_load",
+								"value": {
+									"value": "@{string(activity('Latest loaded data').output.firstRow.latest_value)}",
+									"type": "Expression"
+								}
+							}
+						],
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
