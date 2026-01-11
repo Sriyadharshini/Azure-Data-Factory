@@ -1,5 +1,5 @@
 {
-	"name": "API_ingetion",
+	"name": "API_ingetion_incremental_load",
 	"properties": {
 		"activities": [
 			{
