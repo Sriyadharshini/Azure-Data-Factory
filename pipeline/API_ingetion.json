@@ -148,23 +148,6 @@
 				]
 			},
 			{
-				"name": "Set var",
-				"type": "SetVariable",
-				"dependsOn": [],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "timestamp",
-					"value": {
-						"value": "@utcNow()",
-						"type": "Expression"
-					}
-				}
-			},
-			{
 				"name": "Lookup into datalake lastloaded value",
 				"type": "Lookup",
 				"dependsOn": [],
