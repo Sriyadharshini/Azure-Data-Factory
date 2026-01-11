@@ -25,7 +25,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from dbo.DimUser\nwhere updated_at >'@{activity('Lookup into datalake lastloaded value').output.last_load}'",
+							"value": "select * from dbo.DimUser\nwhere updated_at > CONVERT(datetime2, '@{replace(activity('Lookup into datalake lastloaded value').output.firstRow.last_load,'\\\"Z\\\"','')}')",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
