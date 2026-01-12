@@ -24,6 +24,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "sourceparquet"
+				},
+				{
+					"dataset": {
+						"referenceName": "Exceldatatransformationset",
+						"type": "DatasetReference"
+					},
+					"name": "sourcexlsx"
 				}
 			],
 			"sinks": [],
@@ -55,7 +62,10 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> sourceparquet"
+				"     ignoreNoFilesFound: false) ~> sourceparquet",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourcexlsx"
 			]
 		}
 	}
