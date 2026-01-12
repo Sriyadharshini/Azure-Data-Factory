@@ -34,7 +34,20 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "derivedColumntrimspace"
+				},
+				{
+					"name": "derivedUppercaseCountry"
+				},
+				{
+					"name": "castamountintodecimal"
+				},
+				{
+					"name": "derivedColumnaddingnew"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          id as string,",
@@ -65,7 +78,15 @@
 				"     ignoreNoFilesFound: false) ~> sourceparquet",
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> sourcexlsx"
+				"     ignoreNoFilesFound: false) ~> sourcexlsx",
+				"sourcecsv derive(name = trim(name),",
+				"          country = trim(country)) ~> derivedColumntrimspace",
+				"derivedColumntrimspace derive(country = upper(country)) ~> derivedUppercaseCountry",
+				"derivedUppercaseCountry cast(output(",
+				"          amount as decimal(10,0) '00'",
+				"     ),",
+				"     errors: true) ~> castamountintodecimal",
+				"castamountintodecimal derive(ingestion_time = currentTimestamp()) ~> derivedColumnaddingnew"
 			]
 		}
 	}
