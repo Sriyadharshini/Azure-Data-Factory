@@ -1,0 +1,29 @@
+{
+	"name": "psvdatatransformationset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "sales5.psv",
+				"folderPath": "sourcedataraw",
+				"fileSystem": "bronze"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "id|name|country|amount|updated_at",
+				"type": "String"
+			}
+		]
+	}
+}
