@@ -1,0 +1,62 @@
+{
+	"name": "data transformation into silverlayer t1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "csv_datatransformation_sourceset",
+						"type": "DatasetReference"
+					},
+					"name": "sourcecsv"
+				},
+				{
+					"dataset": {
+						"referenceName": "datatransformationJsondataset",
+						"type": "DatasetReference"
+					},
+					"name": "sourcejson"
+				},
+				{
+					"dataset": {
+						"referenceName": "psvdatatransformationset",
+						"type": "DatasetReference"
+					},
+					"name": "sourceparquet"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          name as string,",
+				"          country as string,",
+				"          amount as string,",
+				"          updated_at as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourcecsv",
+				"source(output(",
+				"          id as integer,",
+				"          name as string,",
+				"          country as string,",
+				"          amount as double,",
+				"          updated_at as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine') ~> sourcejson",
+				"source(output(",
+				"          {id|name|country|amount|updated_at} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceparquet"
+			]
+		}
+	}
+}

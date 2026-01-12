@@ -1,0 +1,39 @@
+{
+	"name": "datatransformationJsondataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "sales2.json",
+				"folderPath": "sourcedataraw",
+				"fileSystem": "bronze"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "integer"
+				},
+				"name": {
+					"type": "string"
+				},
+				"country": {
+					"type": "string"
+				},
+				"amount": {
+					"type": "number"
+				},
+				"updated_at": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
